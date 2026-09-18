@@ -62,6 +62,64 @@ st.markdown("""
         background: #ffffff;
         margin-bottom: 12px;
     }
+    /* Bouton de fermeture de la barre latérale toujours visible et stylisé */
+    [data-testid="stSidebarCollapseButton"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: flex !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button {
+        opacity: 1 !important;
+        visibility: visible !important;
+        background: #e0f2fe !important;
+        color: #0369a1 !important;
+        border: 1px solid #38bdf8 !important;
+        border-radius: 6px !important;
+        padding: 4px 10px !important;
+        font-weight: 600 !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 1px 4px rgba(2,132,199,0.15) !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button:hover {
+        background: #0284c7 !important;
+        color: #ffffff !important;
+        border-color: #0284c7 !important;
+        transform: scale(1.05) !important;
+    }
+    [data-testid="stSidebarCollapseButton"] button::after {
+        content: " Masquer";
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 3px;
+    }
+
+    /* Bouton pour rouvrir la barre latérale repliée */
+    [data-testid="stSidebarCollapsedControl"] {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: flex !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button {
+        background: #0f172a !important;
+        color: #38bdf8 !important;
+        border: 1px solid #38bdf8 !important;
+        border-radius: 0 8px 8px 0 !important;
+        padding: 6px 12px !important;
+        font-weight: 600 !important;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.3) !important;
+        transition: all 0.2s ease !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button:hover {
+        background: #1e3a8a !important;
+        color: #ffffff !important;
+        transform: scale(1.05) !important;
+    }
+    [data-testid="stSidebarCollapsedControl"] button::after {
+        content: " Menu";
+        font-size: 11px;
+        font-weight: 600;
+        margin-left: 3px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -146,6 +204,7 @@ with st.sidebar:
     st.title("Navigation Portfolio")
     st.markdown("**Christophe WAVOEKE**  \n*Data Analyst & Spécialiste BI*")
     st.caption("📍 Cotonou / Abomey-Calavi, Bénin")
+    st.info("💡 **Affichage large :** Cliquez sur **« Masquer** en haut à droite pour replier ce menu et élargir vos graphiques.")
     
     st.divider()
     
