@@ -116,9 +116,14 @@ def render_marine_module():
     col_g1, col_g2 = st.columns(2)
     with col_g1:
         st.markdown("##### 📉 Relation Bathymétrie (Profondeur) vs Rendement (CPUE)")
-        fig_scatter = px.scatter(df, x='bathymetry_m', y='cpue_kg_hr', color='gear_type',
-                                 labels={'bathymetry_m': 'Profondeur Bathymétrique (m)', 'cpue_kg_hr': 'CPUE (kg/heure)'},
-                                 trendline="lowess")
+        try:
+            import statsmodels.api as _sm
+            fig_scatter = px.scatter(df, x='bathymetry_m', y='cpue_kg_hr', color='gear_type',
+                                     labels={'bathymetry_m': 'Profondeur Bathymétrique (m)', 'cpue_kg_hr': 'CPUE (kg/heure)'},
+                                     trendline="lowess")
+        except (ImportError, ModuleNotFoundError):
+            fig_scatter = px.scatter(df, x='bathymetry_m', y='cpue_kg_hr', color='gear_type',
+                                     labels={'bathymetry_m': 'Profondeur Bathymétrique (m)', 'cpue_kg_hr': 'CPUE (kg/heure)'})
         fig_scatter.update_layout(margin=dict(l=10, r=10, t=20, b=10), height=300)
         st.plotly_chart(fig_scatter, use_container_width=True)
         
