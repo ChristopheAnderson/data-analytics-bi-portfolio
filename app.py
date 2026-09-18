@@ -110,9 +110,39 @@ def render_cv_module():
     else:
         st.error("Le fichier du CV HTML est introuvable dans le dossier assets.")
 
+# --- PHOTO DE PROFIL DANS LA BARRE LATÉRALE (RONDE & CENTRÉE) ---
+PROFILE_PIC_PATH = None
+for p_candidate in [
+    os.path.join(CURRENT_DIR, "assets", "jacket.jpeg"),
+    os.path.join(CURRENT_DIR, "assets", "profile.jpeg"),
+    os.path.join(CURRENT_DIR, "assets", "profile.jpg"),
+    os.path.join(CURRENT_DIR, "jacket.jpeg"),
+]:
+    if os.path.exists(p_candidate):
+        PROFILE_PIC_PATH = p_candidate
+        break
+
+profile_img_src = ""
+if PROFILE_PIC_PATH:
+    import base64
+    with open(PROFILE_PIC_PATH, "rb") as img_f:
+        encoded_photo = base64.b64encode(img_f.read()).decode()
+    profile_img_src = f"data:image/jpeg;base64,{encoded_photo}"
+
 # Barre latérale (Sidebar)
 with st.sidebar:
-    st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=64)
+    if profile_img_src:
+        st.markdown(
+            f"""
+            <div style="display: flex; justify-content: center; margin-top: 10px; margin-bottom: 15px;">
+                <img src="{profile_img_src}" alt="Christophe WAVOEKE" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid #0284c7; box-shadow: 0 4px 14px rgba(2,132,199,0.35);" />
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=64)
+
     st.title("Navigation Portfolio")
     st.markdown("**Christophe WAVOEKE**  \n*Data Analyst & Spécialiste BI*")
     st.caption("📍 Cotonou / Abomey-Calavi, Bénin")
