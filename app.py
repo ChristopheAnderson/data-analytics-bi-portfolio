@@ -131,7 +131,7 @@ from p4_predictive_bi_expertise_france import render_predictive_module
 
 def render_cv_module():
     st.markdown("### 📄 Curriculum Vitæ Exécutif — Christophe WAVOEKE")
-    st.markdown("**Data Analyst & Spécialiste Business Intelligence / Data Systems**")
+    st.markdown("**Data Analyst**")
     
     cv_pdf_path = os.path.join(CURRENT_DIR, "assets", "cv.pdf")
     cv_html_path = os.path.join(CURRENT_DIR, "assets", "cv.html")
@@ -202,7 +202,7 @@ with st.sidebar:
         st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=64)
 
     st.title("Navigation Portfolio")
-    st.markdown("**Christophe WAVOEKE**  \n*Data Analyst & Spécialiste BI*")
+    st.markdown("**Christophe WAVOEKE**  \n*Data Analyst*")
     st.caption("📍 Cotonou / Abomey-Calavi, Bénin")
     st.info("💡 **Affichage large :** Cliquez sur **« Masquer** en haut à droite pour replier ce menu et élargir vos graphiques.")
     
