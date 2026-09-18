@@ -20,6 +20,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+import streamlit.components.v1 as components
+
 # Custom CSS for executive look
 st.markdown("""
 <style>
@@ -69,6 +71,45 @@ from p2_marine_spatial_blueventures import render_marine_module
 from p3_humanitarian_impact_kobo import render_kobo_module
 from p4_predictive_bi_expertise_france import render_predictive_module
 
+def render_cv_module():
+    st.markdown("### 📄 Curriculum Vitæ Exécutif — Christophe WAVOEKE")
+    st.markdown("**Data Analyst & Spécialiste Business Intelligence / Data Systems**")
+    
+    cv_pdf_path = os.path.join(CURRENT_DIR, "assets", "cv.pdf")
+    cv_html_path = os.path.join(CURRENT_DIR, "assets", "cv.html")
+    
+    col1, col2, col3 = st.columns([1.5, 1.5, 3])
+    with col1:
+        if os.path.exists(cv_pdf_path):
+            with open(cv_pdf_path, "rb") as f:
+                st.download_button(
+                    label="📥 Télécharger le CV (PDF Officiel 2 Pages)",
+                    data=f.read(),
+                    file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.pdf",
+                    mime="application/pdf",
+                    use_container_width=True
+                )
+    with col2:
+        if os.path.exists(cv_html_path):
+            with open(cv_html_path, "r", encoding="utf-8") as f:
+                html_data = f.read()
+            st.download_button(
+                label="🌐 Télécharger la Version HTML Standalone",
+                data=html_data,
+                file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.html",
+                mime="text/html",
+                use_container_width=True
+            )
+    with col3:
+        st.info("💡 **Aperçu haute fidélité :** Le CV interactif complet est intégré ci-dessous avec ses liens cliquables vers les projets opérationnels.")
+    
+    if os.path.exists(cv_html_path):
+        with open(cv_html_path, "r", encoding="utf-8") as f:
+            raw_html = f.read()
+        components.html(raw_html, height=1250, scrolling=True)
+    else:
+        st.error("Le fichier du CV HTML est introuvable dans le dossier assets.")
+
 # Barre latérale (Sidebar)
 with st.sidebar:
     st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=64)
@@ -79,9 +120,10 @@ with st.sidebar:
     st.divider()
     
     selected_page = st.radio(
-        "Sélectionnez un projet démonstrateur :",
+        "Sélectionnez une section :",
         [
             "🏠 Vue d'Ensemble du Portfolio",
+            "📄 Curriculum Vitæ (CV Exécutif)",
             "🚢 P1 : Logistique Portuaire (Cible AGL)",
             "🌊 P2 : SIG Marin & Biodiversité (Cible Blue Ventures)",
             "📋 P3 : Audit Qualité Kobo (Cible IMPACT Initiatives)",
@@ -95,6 +137,7 @@ with st.sidebar:
     st.markdown("- ✉️ [christophewavoeke18@gmail.com](mailto:christophewavoeke18@gmail.com)")
     st.markdown("- 💻 [Portfolio Web](https://christopher-portofolio.vercel.app)")
     st.markdown("- 🐙 [Profil GitHub](https://github.com/ChristopheAnderson)")
+    st.markdown("- ⚡ [Plateforme WAPP Énergie](https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/)")
     
     st.caption("Plateforme développée sous Python, Streamlit & Plotly.")
 
@@ -156,7 +199,10 @@ if selected_page == "🏠 Vue d'Ensemble du Portfolio":
         </div>
         """, unsafe_allow_html=True)
         
-    st.info("💡 **Navigation :** Utilisez le menu latéral à gauche pour tester en direct chaque projet avec ses paramètres ajustables.")
+    st.info("💡 **Navigation :** Consultez l'onglet **« 📄 Curriculum Vitæ (CV Exécutif) »** pour visualiser et télécharger le CV, ou naviguez sur chaque projet avec ses paramètres ajustables.")
+
+elif selected_page == "📄 Curriculum Vitæ (CV Exécutif)":
+    render_cv_module()
 
 elif selected_page == "🚢 P1 : Logistique Portuaire (Cible AGL)":
     render_port_module()
