@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 from .kobo_audit_engine import generate_humanitarian_survey_data, audit_humanitarian_data
 
 def render_kobo_module():
-    st.subheader("📋 P3 : Pipeline d'Audit Qualité & Data Humanitaire KoboToolbox / ODK (Cible IMPACT Initiatives)")
+    st.subheader("P3 : Pipeline d'Audit Qualité & Data Humanitaire KoboToolbox / ODK (Cible IMPACT Initiatives)")
     st.markdown(
         """
         **Cas d'Usage Métier :** Traitement de données d'enquêtes de terrain (*MSNA*), détection automatisée
@@ -32,15 +32,15 @@ def render_kobo_module():
     
     # Indicateurs qualité
     q1, q2, q3, q4 = st.columns(4)
-    q1.metric("📝 Questionnaires Soumis", f"{audit_res['total_surveys']}")
-    q2.metric("🛡️ Indice Qualité Global", f"{audit_res['data_quality_score_pct']} %", delta=f"{'+' if audit_res['data_quality_score_pct'] >= 90 else '-'} Seuil 90%")
-    q3.metric("⚡ Enquêtes Rapides (<15 min)", f"{audit_res['speeding_count']}", delta="Speeding check", delta_color="inverse")
-    q4.metric("❌ Erreurs de Logique Démographique", f"{audit_res['logic_errors_count']}", delta_color="inverse")
+    q1.metric("Questionnaires Soumis", f"{audit_res['total_surveys']}")
+    q2.metric("Indice Qualité Global", f"{audit_res['data_quality_score_pct']} %", delta=f"{'+' if audit_res['data_quality_score_pct'] >= 90 else '-'} Seuil 90%")
+    q3.metric("Enquêtes Rapides (<15 min)", f"{audit_res['speeding_count']}", delta="Speeding check", delta_color="inverse")
+    q4.metric("Erreurs de Logique Démographique", f"{audit_res['logic_errors_count']}", delta_color="inverse")
     
     # Visualisation des scores de sécurité alimentaire (FCS) et vulnérabilité
     col_v1, col_v2 = st.columns(2)
     with col_v1:
-        st.markdown("##### 🍲 Profil de Consommation Alimentaire (FCS) par Département")
+        st.markdown("##### Profil de Consommation Alimentaire (FCS) par Département")
         fig_fcs = px.violin(df, x='department', y='fcs_food_consumption', color='department', box=True, points="all",
                             labels={'fcs_food_consumption': 'Score FCS', 'department': 'Département'})
         # Lignes seuils PAM
@@ -50,7 +50,7 @@ def render_kobo_module():
         st.plotly_chart(fig_fcs, use_container_width=True)
         
     with col_v2:
-        st.markdown("##### ⏱️ Distribution des Durées d'Interview par Enquêteur")
+        st.markdown("##### Distribution des Durées d'Interview par Enquêteur")
         fig_dur = px.box(df, x='enumerator_id', y='survey_duration_min',
                          labels={'survey_duration_min': 'Durée (min)', 'enumerator_id': 'Code Enquêteur'})
         fig_dur.add_hline(y=15, line_dash="dash", line_color="red", annotation_text="Seuil Speeding (15 min)")
@@ -58,9 +58,9 @@ def render_kobo_module():
         st.plotly_chart(fig_dur, use_container_width=True)
         
     # Table du Cleaning Log généré
-    st.markdown("##### 📋 Journal d'Audit & Recommandations de Nettoyage (Cleaning Log Automatisé)")
+    st.markdown("##### Journal d'Audit & Recommandations de Nettoyage (Cleaning Log Automatisé)")
     clean_log = audit_res['cleaning_log']
     if not clean_log.empty:
         st.dataframe(clean_log.head(15), use_container_width=True)
     else:
-        st.success("✅ Aucune anomalie détectée sur le sous-ensemble sélectionné.")
+        st.success("Aucune anomalie détectée sur le sous-ensemble sélectionné.")

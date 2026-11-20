@@ -15,7 +15,6 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Portfolio Projets Data Analytics & BI | Christophe WAVOEKE",
-    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -130,7 +129,7 @@ from p3_humanitarian_impact_kobo import render_kobo_module
 from p4_predictive_bi_expertise_france import render_predictive_module
 
 def render_cv_module():
-    st.markdown("### 📄 Curriculum Vitæ Exécutif — Christophe WAVOEKE")
+    st.markdown("### Curriculum Vitæ Exécutif — Christophe WAVOEKE")
     st.markdown("**Data Analyst**")
     
     cv_pdf_path = os.path.join(CURRENT_DIR, "assets", "cv.pdf")
@@ -141,7 +140,7 @@ def render_cv_module():
         if os.path.exists(cv_pdf_path):
             with open(cv_pdf_path, "rb") as f:
                 st.download_button(
-                    label="📥 Télécharger le CV (PDF Officiel 2 Pages)",
+                    label="Télécharger le CV (PDF Officiel 2 Pages)",
                     data=f.read(),
                     file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.pdf",
                     mime="application/pdf",
@@ -152,14 +151,14 @@ def render_cv_module():
             with open(cv_html_path, "r", encoding="utf-8") as f:
                 html_data = f.read()
             st.download_button(
-                label="🌐 Télécharger la Version HTML Standalone",
+                label="Télécharger la Version HTML Standalone",
                 data=html_data,
                 file_name="CV_Christophe_WAVOEKE_Data_Analyst_BI.html",
                 mime="text/html",
                 use_container_width=True
             )
     with col3:
-        st.info("💡 **Aperçu haute fidélité :** Le CV interactif complet est intégré ci-dessous avec ses liens cliquables vers les projets opérationnels.")
+        st.info("**Aperçu haute fidélité :** Le CV interactif complet est intégré ci-dessous avec ses liens cliquables vers les projets opérationnels.")
     
     if os.path.exists(cv_html_path):
         with open(cv_html_path, "r", encoding="utf-8") as f:
@@ -187,6 +186,26 @@ if PROFILE_PIC_PATH:
         encoded_photo = base64.b64encode(img_f.read()).decode()
     profile_img_src = f"data:image/jpeg;base64,{encoded_photo}"
 
+PAGES_LIST = [
+    "Vue d'Ensemble du Portfolio",
+    "Curriculum Vitæ (CV Exécutif)",
+    "P1 : Logistique Portuaire (Cible AGL)",
+    "P2 : SIG Marin & Biodiversité (Cible Blue Ventures)",
+    "P3 : Audit Qualité Kobo (Cible IMPACT Initiatives)",
+    "P4 : Modélisation ODD (Cible Expertise France / ONU)"
+]
+
+default_idx = 0
+try:
+    page_param = st.query_params.get("page", "").lower()
+    if page_param:
+        for idx, p_title in enumerate(PAGES_LIST):
+            if page_param in p_title.lower():
+                default_idx = idx
+                break
+except Exception:
+    pass
+
 # Barre latérale (Sidebar)
 with st.sidebar:
     if profile_img_src:
@@ -198,35 +217,27 @@ with st.sidebar:
             """,
             unsafe_allow_html=True
         )
-    else:
-        st.image("https://img.icons8.com/fluency/96/combo-chart.png", width=64)
 
     st.title("Navigation Portfolio")
     st.markdown("**Christophe WAVOEKE**  \n*Data Analyst*")
-    st.caption("📍 Cotonou / Abomey-Calavi, Bénin")
-    st.info("💡 **Affichage large :** Cliquez sur **« Masquer** en haut à droite pour replier ce menu et élargir vos graphiques.")
+    st.caption("Cotonou / Abomey-Calavi, Bénin")
+    st.info("**Affichage large :** Cliquez sur **Masquer** en haut à droite pour replier ce menu et élargir vos graphiques.")
     
     st.divider()
     
     selected_page = st.radio(
         "Sélectionnez une section :",
-        [
-            "🏠 Vue d'Ensemble du Portfolio",
-            "📄 Curriculum Vitæ (CV Exécutif)",
-            "🚢 P1 : Logistique Portuaire (Cible AGL)",
-            "🌊 P2 : SIG Marin & Biodiversité (Cible Blue Ventures)",
-            "📋 P3 : Audit Qualité Kobo (Cible IMPACT Initiatives)",
-            "📈 P4 : Modélisation ODD (Cible Expertise France / ONU)"
-        ]
+        PAGES_LIST,
+        index=default_idx
     )
     
     st.divider()
-    st.markdown("### 🔗 Liens & Contact")
-    st.markdown("- 📞 **+229 01 66 81 83 76**")
-    st.markdown("- ✉️ [christophewavoeke18@gmail.com](mailto:christophewavoeke18@gmail.com)")
-    st.markdown("- 💻 [Portfolio Web](https://christopher-portofolio.vercel.app)")
-    st.markdown("- 🐙 [Profil GitHub](https://github.com/ChristopheAnderson)")
-    st.markdown("- ⚡ [Plateforme WAPP Énergie](https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/)")
+    st.markdown("### Liens & Contact")
+    st.markdown("- **Tél. :** +229 01 66 81 83 76")
+    st.markdown("- **Email :** [christophewavoeke18@gmail.com](mailto:christophewavoeke18@gmail.com)")
+    st.markdown("- [Portfolio Web](https://christopher-portofolio.vercel.app)")
+    st.markdown("- [Profil GitHub](https://github.com/ChristopheAnderson)")
+    st.markdown("- [Plateforme WAPP Énergie](https://power-data-pipeline-bqhbx2x3rta7odtqusg8bb.streamlit.app/)")
     
     st.caption("Plateforme développée sous Python, Streamlit & Plotly.")
 
@@ -240,8 +251,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Routage des vues
-if selected_page == "🏠 Vue d'Ensemble du Portfolio":
-    st.markdown("### 🎯 Synthèse des Projets et Références Techniques")
+if selected_page == "Vue d'Ensemble du Portfolio":
+    st.markdown("### Synthèse des Projets et Références Techniques")
     st.markdown(
         """
         Cette plateforme concrétise l'ensemble des compétences et projets mentionnés sur le CV de 
@@ -253,7 +264,7 @@ if selected_page == "🏠 Vue d'Ensemble du Portfolio":
     with c1:
         st.markdown("""
         <div class="project-card">
-            <h4>🚢 P1 : Logistique Portuaire & Supply Chain Multimodale</h4>
+            <h4>P1 : Logistique Portuaire & Supply Chain Multimodale</h4>
             <p><strong>Cible :</strong> Africa Global Logistics (AGL) / Ports maritimes</p>
             <p>Pilotage du Turnaround Time (temps d'attente rade + quai), cadences portiques EVP/h et détection précoce des risques de surestaries (Demurrage).</p>
             <small><strong>Stack :</strong> Python, SQL, KPI Analytics, Plotly</small>
@@ -262,7 +273,7 @@ if selected_page == "🏠 Vue d'Ensemble du Portfolio":
         
         st.markdown("""
         <div class="project-card">
-            <h4>📋 P3 : Pipeline d'Audit Qualité & Data Humanitaire Kobo</h4>
+            <h4>P3 : Pipeline d'Audit Qualité & Data Humanitaire Kobo</h4>
             <p><strong>Cible :</strong> IMPACT Initiatives / REACH / ONG Internationales</p>
             <p>Ingestion de données mobiles Kobo/ODK, contrôle qualité automatisé (Speeding surveys, logique démographique, outliers) et génération du Cleaning Log.</p>
             <small><strong>Stack :</strong> Python, Data Quality Rules, Validation Statistique</small>
@@ -272,7 +283,7 @@ if selected_page == "🏠 Vue d'Ensemble du Portfolio":
     with c2:
         st.markdown("""
         <div class="project-card">
-            <h4>🌊 P2 : Analyse Géospatiale & Cartographie Côtière (SIG)</h4>
+            <h4>P2 : Analyse Géospatiale & Cartographie Côtière (SIG)</h4>
             <p><strong>Cible :</strong> Blue Ventures / Projets Environnement & Pêche</p>
             <p>Cartographie spatio-temporelle de l'effort de pêche côtière (CPUE), bathymétrie, suivi des Aires Marines Protégées (AMP) et analyse d'impact écologique.</p>
             <small><strong>Stack :</strong> GeoPandas, Scatter Mapbox, Géostatistique, Folium</small>
@@ -281,26 +292,43 @@ if selected_page == "🏠 Vue d'Ensemble du Portfolio":
         
         st.markdown("""
         <div class="project-card">
-            <h4>📈 P4 : Modélisation Prévisionnelle & Indicateurs ODD</h4>
+            <h4>P4 : Modélisation Prévisionnelle & Indicateurs ODD</h4>
             <p><strong>Cible :</strong> Expertise France / Système des Nations Unies (ONU)</p>
             <p>Analyse prédictive de séries temporelles avec décomposition de tendance et saisonnalité, cônes de confiance à 95% et suivi décisionnel des ODD.</p>
             <small><strong>Stack :</strong> Time Series Forecasting, Scikit-Learn, Streamlit Dataviz</small>
         </div>
         """, unsafe_allow_html=True)
         
-    st.info("💡 **Navigation :** Consultez l'onglet **« 📄 Curriculum Vitæ (CV Exécutif) »** pour visualiser et télécharger le CV, ou naviguez sur chaque projet avec ses paramètres ajustables.")
+    st.info("**Navigation :** Consultez l'onglet **Curriculum Vitæ (CV Exécutif)** pour visualiser et télécharger le CV, ou explorez directement les démonstrateurs interactifs ci-dessous.")
 
-elif selected_page == "📄 Curriculum Vitæ (CV Exécutif)":
+    st.divider()
+    st.markdown("### Aperçu Direct des Démonstrateurs Opérationnels")
+    tab_p1, tab_p2, tab_p3, tab_p4 = st.tabs([
+        "P1 : Logistique Portuaire (AGL)",
+        "P2 : SIG Marin & Biodiversité (Blue Ventures)",
+        "P3 : Audit Qualité Kobo (IMPACT)",
+        "P4 : Modélisation ODD (Expertise France / ONU)"
+    ])
+    with tab_p1:
+        render_port_module()
+    with tab_p2:
+        render_marine_module()
+    with tab_p3:
+        render_kobo_module()
+    with tab_p4:
+        render_predictive_module()
+
+elif selected_page == "Curriculum Vitæ (CV Exécutif)":
     render_cv_module()
 
-elif selected_page == "🚢 P1 : Logistique Portuaire (Cible AGL)":
+elif selected_page == "P1 : Logistique Portuaire (Cible AGL)":
     render_port_module()
 
-elif selected_page == "🌊 P2 : SIG Marin & Biodiversité (Cible Blue Ventures)":
+elif selected_page == "P2 : SIG Marin & Biodiversité (Cible Blue Ventures)":
     render_marine_module()
 
-elif selected_page == "📋 P3 : Audit Qualité Kobo (Cible IMPACT Initiatives)":
+elif selected_page == "P3 : Audit Qualité Kobo (Cible IMPACT Initiatives)":
     render_kobo_module()
 
-elif selected_page == "📈 P4 : Modélisation ODD (Cible Expertise France / ONU)":
+elif selected_page == "P4 : Modélisation ODD (Cible Expertise France / ONU)":
     render_predictive_module()

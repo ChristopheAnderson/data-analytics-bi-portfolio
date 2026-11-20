@@ -8,7 +8,7 @@
 
 ---
 
-## 🎯 Présentation Générale
+## Présentation Générale
 
 Ce dépôt regroupe une suite complète de **projets réels et opérationnels** en analyse de données, modélisation statistique et ingénierie décisionnelle, conçus pour démontrer l'excellence technique et métier auprès d'institutions internationales et d'entreprises de premier plan :
 
@@ -30,7 +30,7 @@ Ce dépôt regroupe une suite complète de **projets réels et opérationnels** 
 
 ---
 
-## 🚀 Installation & Lancement Local
+## Installation & Lancement Local
 
 ```bash
 # 1. Cloner le dépôt

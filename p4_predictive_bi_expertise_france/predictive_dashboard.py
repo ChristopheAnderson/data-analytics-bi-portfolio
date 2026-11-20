@@ -8,7 +8,7 @@ import pandas as pd
 from .predictive_engine import generate_development_indicators_series, forecast_time_series
 
 def render_predictive_module():
-    st.subheader("📈 P4 : Modélisation Prévisionnelle & Suivi des Indicateurs ODD (Cible Expertise France & ONU)")
+    st.subheader("P4 : Modélisation Prévisionnelle & Suivi des Indicateurs ODD (Cible Expertise France & ONU)")
     st.markdown(
         """
         **Cas d'Usage Métier :** Modélisation statistique sur séries temporelles, estimation de tendances
@@ -41,13 +41,13 @@ def render_predictive_module():
     final_pred = forecast_df['forecast'].iloc[-1]
     progression = round(final_pred - last_val, 2)
     
-    m1.metric("📍 Valeur Actuelle Observée", f"{last_val}")
-    m2.metric(f"🎯 Projection à {horizon} mois", f"{final_pred}", delta=f"{'+' if progression > 0 else ''}{progression}")
-    m3.metric("📉 Erreur Moyenne (MAPE)", f"{metrics['mape_pct']} %", help="Mean Absolute Percentage Error")
-    m4.metric("📈 Gain Annuel Modélisé", f"+{metrics['slope_annual_gain']} pts/an")
+    m1.metric("Valeur Actuelle Observée", f"{last_val}")
+    m2.metric(f"Projection à {horizon} mois", f"{final_pred}", delta=f"{'+' if progression > 0 else ''}{progression}")
+    m3.metric("Erreur Moyenne (MAPE)", f"{metrics['mape_pct']} %", help="Mean Absolute Percentage Error")
+    m4.metric("Gain Annuel Modélisé", f"+{metrics['slope_annual_gain']} pts/an")
     
     # Graphique interactif de séries temporelles avec cône d'incertitude
-    st.markdown(f"##### 📊 Historique et Projections Prédictives avec Intervalle de Confiance (95%)")
+    st.markdown("##### Historique et Projections Prédictives avec Intervalle de Confiance (95%)")
     fig = go.Figure()
     
     # Série historique
@@ -87,7 +87,7 @@ def render_predictive_module():
     st.plotly_chart(fig, use_container_width=True)
     
     # Tableau de données prédictives
-    st.markdown("##### 📑 Données Prévisionnelles et Bornes Statistiques")
+    st.markdown("##### Données Prévisionnelles et Bornes Statistiques")
     st.dataframe(forecast_df.rename(columns={
         'date': 'Mois Prévisionnel',
         'forecast': 'Valeur Estimée',

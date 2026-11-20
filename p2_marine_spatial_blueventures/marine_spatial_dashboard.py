@@ -8,7 +8,7 @@ import plotly.graph_objects as go
 from .marine_spatial_engine import generate_coastal_marine_data, compute_marine_kpis
 
 def render_marine_module():
-    st.subheader("🌊 P2 : Analyse Géospatiale Marine & Suivi de la Pêche Artisanale (Cible Blue Ventures)")
+    st.subheader("P2 : Analyse Géospatiale Marine & Suivi de la Pêche Artisanale (Cible Blue Ventures)")
     st.markdown(
         """
         **Cas d'Usage Métier :** Cartographie SIG de l'effort de pêche (*CPUE*), bathymétrie côtière,
@@ -36,18 +36,18 @@ def render_marine_module():
     
     # Indicateurs majeurs
     m1, m2, m3, m4 = st.columns(4)
-    m1.metric("🐟 Captures Débarquées", f"{kpis['total_catch_tonnes']} Tonnes", help="Volume total échantillonné")
-    m2.metric("⚓ Rendement Moyen (CPUE)", f"{kpis['avg_cpue_kg_hr']} kg/h", delta="+12% vs zone dégradée")
-    m3.metric("🛡️ Indice Santé en AMP", f"{kpis['eco_health_in_mpa']} / 10", delta=f"+{kpis['biodiversity_gain_pct']}% vs hors AMP", delta_color="normal")
-    m4.metric("🗺️ Échantillons en Zone Protégée", f"{kpis['mpa_sample_coverage_pct']}%")
+    m1.metric("Captures Débarquées", f"{kpis['total_catch_tonnes']} Tonnes", help="Volume total échantillonné")
+    m2.metric("Rendement Moyen (CPUE)", f"{kpis['avg_cpue_kg_hr']} kg/h", delta="+12% vs zone dégradée")
+    m3.metric("Indice Santé en AMP", f"{kpis['eco_health_in_mpa']} / 10", delta=f"+{kpis['biodiversity_gain_pct']}% vs hors AMP", delta_color="normal")
+    m4.metric("Échantillons en Zone Protégée", f"{kpis['mpa_sample_coverage_pct']}%")
     
     # Cartographie spatiale interactive
-    st.markdown("##### 🗺️ Cartographie Spatiale des Prélèvements & Bathymétrie Côtière")
+    st.markdown("##### Cartographie Spatiale des Prélèvements & Bathymétrie Côtière")
     
     center_lat = float(df['latitude'].mean()) if not df.empty else 6.28
     center_lon = float(df['longitude'].mean()) if not df.empty else 2.38
     
-    tab_map1, tab_map2 = st.tabs(["🗺️ Vue Cartographique SIG (OpenStreetMap)", "📍 Projection Spatiale 2D (Coordonnées GPS & Bathymétrie)"])
+    tab_map1, tab_map2 = st.tabs(["Vue Cartographique SIG (OpenStreetMap)", "Projection Spatiale 2D (Coordonnées GPS & Bathymétrie)"])
     
     with tab_map1:
         if hasattr(px, "scatter_map"):
@@ -115,7 +115,7 @@ def render_marine_module():
     # Graphiques d'analyse croisée
     col_g1, col_g2 = st.columns(2)
     with col_g1:
-        st.markdown("##### 📉 Relation Bathymétrie (Profondeur) vs Rendement (CPUE)")
+        st.markdown("##### Relation Bathymétrie (Profondeur) vs Rendement (CPUE)")
         try:
             import statsmodels.api as _sm
             fig_scatter = px.scatter(df, x='bathymetry_m', y='cpue_kg_hr', color='gear_type',
@@ -128,7 +128,7 @@ def render_marine_module():
         st.plotly_chart(fig_scatter, use_container_width=True)
         
     with col_g2:
-        st.markdown("##### 🛡️ Comparaison d'Impact : Aire Protégée (AMP) vs Zone Libre")
+        st.markdown("##### Comparaison d'Impact : Aire Protégée (AMP) vs Zone Libre")
         comp_df = df.groupby('in_marine_protected_area')[['eco_health_index', 'cpue_kg_hr']].mean().reset_index()
         comp_df['Statut'] = comp_df['in_marine_protected_area'].map({True: 'Aire Marine Protégée (AMP)', False: 'Zone Ouverte'})
         fig_bar = px.bar(comp_df, x='Statut', y='eco_health_index', color='Statut',
