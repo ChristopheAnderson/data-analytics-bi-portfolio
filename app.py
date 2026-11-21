@@ -332,3 +332,13 @@ elif selected_page == "P3 : Audit Qualité Kobo (Cible IMPACT Initiatives)":
 
 elif selected_page == "P4 : Modélisation ODD (Cible Expertise France / ONU)":
     render_predictive_module()
+
+# Point d'entrée de compatibilité pour le déploiement Serverless Vercel
+def app(environ, start_response):
+    target = "https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app" + environ.get('PATH_INFO', '')
+    start_response('302 Found', [('Location', target), ('Content-Type', 'text/plain')])
+    return [b"Redirecting to Streamlit Cloud..."]
+
+application = app
+handler = app
+
