@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://data-analytics-bi-portfolio-ek57rbdepycxrx94gjvdv8.streamlit.app/$1",
+      "permanent": false
+    }
+  ]
+}
