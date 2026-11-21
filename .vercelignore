@@ -1,2 +1,4 @@
-# Ignorer requirements.txt pour Vercel
+# Ignorer les fichiers Python pour le builder Vercel
 requirements.txt
+app.py
+*.py
